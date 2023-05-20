@@ -8,6 +8,7 @@ interface IrisData {
     sepal_width: number;
     petal_length: number;
     petal_width: number;
+    target: number;
     species: string;
   }
   
@@ -23,6 +24,7 @@ interface IrisData {
             sepal_width: Number(row.sepal_width),
             petal_length: Number(row.petal_length),
             petal_width: Number(row.petal_width),
+            target: Number(row.target),
             species: row.target_names,
           };
           data.push(irisData);
@@ -52,13 +54,23 @@ async function main() {
     splitData(data, 0.3)
     const features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width'];
     const target = 'species';
-    const trainFeatures = data.map((item) => pick(item, features))
-    const trainLabels = data.map((item: IrisData) => item[target]);
-    const classifier = new RandomForestClassifier({ nEstimators: 10 });
+    const trainFeatures = data.map((item) => [
+        item.petal_length,
+        item.petal_width,
+        item.sepal_length,
+        item.sepal_width
+    ])
+    const trainLabels = data.map((item) => item.target)
+    console.log(trainFeatures)
+    console.log(trainLabels)
+    const options = {
+        seed: 42, // ランダムシードの指定（任意）
+        numTrees: 10, // ランダムフォレストの木の数（任意）
+      };
+    const classifier = new RandomForestClassifier(options);
     classifier.train(trainFeatures, trainLabels);
     const predictions = classifier.predict(trainFeatures);
-    console.log('Predictions:', predictions);
-    console.log('Actual Labels:', trainLabels);
+    console.log(predictions)
     } catch (error) {
       console.error('An error occurred:', error);
     }
