@@ -1,7 +1,7 @@
 import csvParser, { CsvParser } from 'csv-parser';
 import { readFileSync, createReadStream } from 'fs';
 import {shuffle, pick} from 'lodash';
-import { RandomForestClassifier } from 'random-forest-classifier';
+import { RandomForestClassifier } from 'ml-random-forest';
 
 interface IrisData {
     sepal_length: number;
@@ -55,7 +55,7 @@ async function main() {
     const trainFeatures = data.map((item) => pick(item, features))
     const trainLabels = data.map((item: IrisData) => item[target]);
     const classifier = new RandomForestClassifier({ nEstimators: 10 });
-    classifier.fit(trainFeatures, trainLabels);
+    classifier.train(trainFeatures, trainLabels);
     const predictions = classifier.predict(trainFeatures);
     console.log('Predictions:', predictions);
     console.log('Actual Labels:', trainLabels);
