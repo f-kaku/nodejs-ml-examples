@@ -21,11 +21,13 @@
     "csv-parser": "^3.0.0",
     "lodash": "^4.17.21",
     "ml-random-forest": "^2.1.0",
+    "plotly.js": "^2.23.2",
     "random-forest-classifier": "^0.6.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.194"
+    "@types/lodash": "^4.14.194",
+    "@types/plotly.js": "^2.12.18"
   }
 }
